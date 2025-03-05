@@ -1,0 +1,56 @@
+<html>
+<head>
+	<title>nginx web - even and odd number</title>
+	<style>
+	*{
+	margin: 0;
+	font-family: Arial, sans-serif;
+	}
+	body{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	flex-direction: column;
+	padding: 10px;
+	}
+	.content{
+	display: flex;
+	padding: 10px;
+	margin: 10px;
+	width: 300px;
+	flex-direction: column;
+	text-align: center;
+	}
+	</style>
+</head>
+
+<body>
+
+<header>
+<h1>Even/Odd Number Checker;</h1>
+</header>
+
+<div class="content">
+	<h1>Enter number:</h1>
+	<input type="text" id="number">
+	<button onclick="checkNumber()">Check</button>
+	<p id="result"></p>
+</div>
+	<script>
+		function checkNumber(){
+			let num = document.getElementById("number").value;
+			fetch("/check", {
+			     method: "POST",
+			     headers: {"Content-Type": "application/json"},
+			     body: JSON.stringify({number: Number(num)})
+		})
+		.then(response => response.json())
+		.then(data => {
+		      document.getElementById("result").innerText = data.message || data.error;
+		});
+	}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+- name: Installing Nginx
+  hosts: local
+  become: true
+  tasks:
+    - name: Package updating
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+
+    - name: Installing Nginx
+      package:
+         name: nginx
+         state: present
