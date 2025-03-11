@@ -12,3 +12,28 @@
       package:
          name: nginx
          state: present
+
+- name: Autostart and start nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+
+- name: Copying custom configuration
+  template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+  nolity: Restart Nginx...
+
+handlers:
+  - name: Restarting Nginx
+    service:
+      name: nginx
+      state: restarted
+
+
+- name: Posting custom HTML website
+  template:
+    src: temlplates/index.html.j2
+    dest: /var/www/html/index.html
